@@ -1,0 +1,156 @@
+<!-- Page Content -->
+<div class="container">
+
+  <!-- Portfolio Item Heading -->
+  <h1 class="my-4"><%= @product.name %></h1>
+
+  <!-- Portfolio Item Row -->
+  <div class="row">
+
+    <div class="col-md-6">
+    	<%= image_tag @product.image.url,:class=> "img-fluid show_product_image" %>
+    	<p class="mt-2"><i class="fa fa-tag" aria-hidden="true"></i> <span><%= @product.master_category.name.capitalize%></span> <span><i class="fa fa-user-circle-o" aria-hidden="true"></i> <%= @product.user.name.capitalize %></span></p>
+      
+    </div>
+
+    <div class="col-md-6">
+      <h3 class="my-3"> Description</h3>
+      <p><%= @product.description %></p>
+     <h4>Reviews</h4>
+     <% @product_reviews.each do |vv| %>
+     <div class="card_data">
+     <span><i class="fa fa-user-circle-o" aria-hidden="true"></i> <%= vv.user.name %></span><br>
+     <% (1..5).each do |gg| %>
+     <%=  @disable = vv.rating.to_i >= gg ? '<i class="fa fa-star rating_star" aria-hidden="true"></i>'.html_safe : '<i class="fa fa-star-o" aria-hidden="true"></i>'.html_safe
+ %>
+     <%# @reviewselected = @disable == true ? false : true %>
+     
+     <%#= radio_button_tag (vv.id.to_s+"pro".to_s+gg.to_s),'available', vv.rating.to_i >= gg, :disabled=> @reviewselected  %>
+     <% end %><br>
+
+ 
+     <%= vv.message %>  <span class="pl-5 link"><%= user_signed_in? ? current_user.id == vv.user_id ? (link_to "(Edit)", edit_post_review_path(vv.id)) : "" : "" %></span>
+     </div></br>
+     <% if vv.reply_reviews.present? %>
+    <%  vv.reply_reviews.each do |ss| %>
+
+    <span><i class="fa fa-user-circle-o" aria-hidden="true"></i> <%= ss.user.name %></span><br>
+    <%= ss.message %></br>
+
+
+    <% end %>
+
+     <% end %> <br/>
+     <% if user_signed_in? %>
+
+ 
+
+<form class="form-inline" method="POST" id ="formreply-button<%= vv.id %>" >
+  <div class="form-row align-items-center">
+    <div class="col-auto">
+     
+      <textarea class="form-control" name="reply_message" id="exampleFormControlTextarea1" cols="28" rows="2"></textarea>
+     
+    </div>
+      <input type="hidden" id="article_id" name="article_id" value= <%= vv.id %> >
+    
+    <%#= text_area :message, class: "form-control", placeholder: "Your Comment" , required: 'true' %>
+    
+
+  
+   <div class="col-auto">
+      <button type="button" id="reply-button<%= vv.id %>" onclick="replycomment(this.id)" class="btn btn-primary mb-2">Reply</button>
+    </div>
+    </div>
+</form>
+<% end %>
+ </br>
+     <% end %>
+    </div>
+
+  </div>
+  <!-- /.row -->
+  <div class="container">
+
+  <h1 class="my-4">Post a Review</h1>
+
+  <% if current_user %>
+
+<%= render "post_reviews/form" %>
+<% else %>
+<div class="container">
+<div class="row">
+<div class="col-md-6 card card-body bg_primry">
+<center><h5>Please Login/Signup to Review  Product</h5></center>
+<div class="mt-4 text-center">
+<span><%= link_to "Log in", new_user_session_path,:class => "btn btn-info btn-xs btn_width" %></span>
+<span><%= link_to "Sign up", new_user_registration_path,:class => "btn btn-danger btn-xs btn_width" %></span>
+</div>
+</div>
+</div>
+</div>
+<% end %>
+</div>
+<hr>
+
+  <!-- Related Projects Row -->
+  <h3 class="my-4">Related Projects</h3>
+
+  <div class="row related">
+  	<% @related_products.each do |cc| %> 
+
+    <div class="col-md-3 col-sm-6 mb-4">
+
+<%= link_to cc,:class=> "d-block mb-3" do %>
+  <%= image_tag(cc.image.url,:class=> "img-fluid img-thumbnail") %>
+<% end %>
+
+      
+    </div>
+
+    <% end %>
+
+  </div>
+  <!-- /.row -->
+
+</div>
+<!-- /.container -->
+<script type="text/javascript">
+
+
+function replycomment(clicked_id) {
+	var form_id = "form"+clicked_id;
+	//alert(form_id);
+	var comment_id = document.getElementById(form_id).elements.namedItem("article_id").value;
+	var reply_msg = document.getElementById(form_id).elements.namedItem("reply_message").value;
+	var product_id = '<%=params[:id]%>';
+	//alert(product_id);
+	//var elem2 = elem1.closest("#article_id");
+   $.ajax({
+              beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+              type:'post',
+              async: true,
+
+              url: '/add_reply',
+              data: {review_id: comment_id, reply_msg: reply_msg,product_id: product_id}
+
+
+            });
+ // var formid = document.getElementById("demo");
+}
+
+
+$(document).ready(function(){
+  $("#reply-button").click(function(){
+    alert("The paragraph was clicked.");
+  
+
+
+	
+});
+});
+</script>
+
+
+
+

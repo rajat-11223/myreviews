@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Myreviews</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+
+  <body>
+<nav class="navbar navbar-expand-sm bg-info navbar-dark mb-5">
+  <!-- Brand -->
+  <div class="container">
+<div class="row" style="width: 100%">
+  <div class="col-md-4">
+  
+  <%= link_to 'Home'.html_safe, root_url,class: "navbar-brand" %>
+</div>
+<div class="col-md-8 ">
+  <!-- Links -->
+  <ul class="navbar-nav float_right">
+     
+    
+
+    <!-- Dropdown -->
+    <% if user_signed_in? %>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle nav-font" href="#" id="navbardrop" data-toggle="dropdown">
+        <%= current_user.name.capitalize %>
+      </a>
+      <div class="dropdown-menu">  
+        <%#= link_to 'Edit User', "/users/edit", class: "dropdown-item"%>
+      <%= link_to 'My Profile', "/user_profile", class: "dropdown-item"%>
+      <%= link_to "Create Product", new_product_path,:class => "dropdown-item" %>
+      <%= link_to 'Log Out', "/users/sign_out", method: :delete, class: "dropdown-item"%>
+      
+    
+        <!--<a class="dropdown-item" href="#">Link 2</a>
+        <a class="dropdown-item" href="#">Link 3</a>-->
+      </div>
+    </li>
+    <% else %>
+    <li class="nav-item">
+      <%= link_to "Log in", "/users/sign_in",:class => "nav-link navbar-brand nav-font" %>
+</li>
+      <li class="nav-item">
+      <%= link_to "Sign Up", "/users/sign_up",:class => "nav-link navbar-brand nav-font" %>
+      
+    </li>
+     <li class="nav-item">
+      <%= link_to "Create Product", new_product_path,:class => "nav-link navbar-brand nav-font" %>
+      
+    </li>
+    <% end %>
+  </ul>
+</div>
+</div>
+</div>
+</nav>
+
+
+
+<% flash.each do |key, value| %>
+<div class="container">
+      <center><div class="<%= flash_class(key) %>">
+            <%= value %>
+      </div></center>
+      </div>
+<% end %>
+    
+    <%= yield %>
+  </body>
+</html>

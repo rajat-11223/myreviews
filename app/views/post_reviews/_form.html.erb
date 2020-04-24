@@ -1,0 +1,47 @@
+<div class="container">
+<div class="row">
+<div class="col-md-6 card card-body bg_primry">
+
+
+
+<%= form_for(@post_review) do |f| %>
+  <% if @post_review.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post_review.errors.count, "error") %> prohibited this post_review from being saved:</h2>
+
+      <ul>
+        <% @post_review.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+ 
+     <div class="form-group">
+    <label for="rating">User Rating</label><br />
+          
+          <%= f.radio_button :rating, '1' %>
+          <%= f.radio_button :rating, '2' %>
+          <%= f.radio_button :rating, '3' %>
+          <%= f.radio_button :rating, '4' %>
+          <%= f.radio_button :rating, '5' %>
+
+    </div>
+    <div class="form-group">
+    <label for="MESSAGE">Your Review</label><br />
+    
+    <%= f.text_area :message, autocomplete: "message", class: "form-control",required: "true" %>
+  </div>
+
+    <%= f.hidden_field :user_id, :value=> current_user.id %>
+    <% if params[:action] != "edit" %>
+    <%= f.hidden_field :product_id, :value=> @product.id %>
+    <% end %>
+<%= f.submit "Add Review" ,:class => "btn btn-primary" %>
+<% end %>
+</div>
+<div class="col-md-3">
+</div>
+</div>
+</div>

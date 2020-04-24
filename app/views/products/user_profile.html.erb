@@ -1,0 +1,79 @@
+<div class="container">
+   <center><h2>User Profile</h2></center>
+
+<div class="card">
+  <%= image_tag current_user.image.url %>
+  <h3 class="mt-3"><%= current_user.name.capitalize %></h3>
+  <p class="title"><%= current_user.email %></p>
+  
+  <div style="margin: 24px 0;">
+    <a href="#"><i class="fa fa-dribbble"></i></a> 
+    <a href="#"><i class="fa fa-twitter"></i></a>  
+    <a href="#"><i class="fa fa-linkedin"></i></a>  
+    <a href="#"><i class="fa fa-facebook"></i></a> 
+  </div>
+  <p><%= link_to 'Edit Profile', "/users/edit", class: "edit_profile"%></p>
+</div>
+</div>
+
+
+<div class="container">
+
+  <h1 class="font-weight-light text-center mt-4 mb-0">My  Products</h1>
+
+  <hr class="mt-2 mb-5">
+
+  <div class="row text-center text-lg-left">
+<% @myproducts.each do |product| %>
+    <div class="col-lg-3 col-md-4 col-6 product_gallery mb-5">
+<b><p> <%= product.name %></p></b>
+      <%= link_to product,:class=> "d-block mb-3" do %>
+  <%= image_tag(product.image.url,:class=> "img-fluid img-thumbnail") %>
+<% end %>
+<p><%= product.description.truncate_words(20) %></p>
+      
+    </div>
+    <% end %>
+    
+  </div>
+
+</div>
+
+
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.title {
+  color: grey;
+  font-size: 15px;
+}
+
+.edit_profile {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+}
+
+.edit_profile:hover, a:hover {
+  opacity: 0.7;
+}
+</style>

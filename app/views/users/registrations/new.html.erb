@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-xl-9 mx-auto">
+        <div class="card card-signin flex-row my-5">
+          <div class="card-img-left d-none d-md-flex">
+             <!-- Background image for card set in CSS! -->
+          </div>
+          <div class="card-body">
+            <h5 class="card-title text-center">Register</h5>
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+            <%= render "users/shared/error_messages", resource: resource %>
+           
+              <div class="form-group">
+              	<label for="inputgender">Username</label><br />
+                <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control", id: "inputuserame" ,required: "true", placeholder: "Username", maxlength: "15" %>
+                
+               
+              </div>
+
+              <div class="form-group">
+              	<label for="inputEmail">Email address</label><br/>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Email address", id: "inputEmail" %>
+                
+              </div>
+              
+            
+
+              <div class="form-group">
+              	<label for="inputPassword">Password</label><br>
+                <%= f.password_field :password, autocomplete: "new-password", class: "form-control",placeholder: "Password",id: "inputPassword" %>
+                
+              </div>
+              
+              <div class="form-group">
+              	 <label for="inputConfirmPassword">Confirm password</label><br>
+                <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", id: "inputConfirmPassword",placeholder: "Confirm-Password"  %>
+                
+               
+              </div>
+               <div class="form-group">
+    <label for="inputgender">Gender</label><br />
+    <%= f.radio_button :gender, 'male' %> Male
+    <%= f.radio_button :gender, 'female' %> Female
+  </div>
+
+
+ <div class="form-group">
+    <label for="profile_image">User Image</label><br />
+    <%= f.file_field :image, autocomplete: "new-password", class: "form-control",placeholder: "Profile-Photo"  %>
+  </div>
+
+
+
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
+              <div class="col-md-12 text-left mt-4">
+    <%- if controller_name != 'sessions' %>
+    <span>Already have account?</span> <%= link_to "Log in", new_session_path(resource_name),:class => "btn btn-danger" %>
+  
+<% end %>
+  </div>
+              <hr class="my-4">
+              
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
