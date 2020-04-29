@@ -157,3 +157,7 @@ border: 1px solid #000;
  color: #fff !important;
   font-size: 20px;
 }
+.img_width {
+    width: auto;
+    height: 250px;
+}

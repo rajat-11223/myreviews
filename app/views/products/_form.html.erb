@@ -33,7 +33,7 @@
   <%= f.hidden_field :user_id, value: current_user.id %>
   <div class="form-group">
     <%= f.label :master_category_id %><br />
-    <%= f.collection_select :master_category_id,@category, :id,:name,{ :prompt => 'Select Category' },{ class: "form-control add_city"} %>
+    <%= f.collection_select :master_category_id,@category, :id,:name,{ :prompt => 'Select Category' },{ class: "form-control add_city", :required => true} %>
   </div>
    <div class="form-group">
     <%= f.label :image %><br />

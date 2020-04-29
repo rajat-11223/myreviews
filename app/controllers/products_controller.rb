@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
     @products = Product.all
-    @groupproduct = Product.group(:master_category_id)
+    #@groupproduct = Product.group(:master_category_id)
     @category = MasterCategory.all
   end
 

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
         get "user_profile" =>"products#user_profile", as: :user_profile	
         post "add_reply" =>"post_reviews#add_reply", as: :add_reply
 
-      root 'products#index'
+        root 'products#index'
 
       #devise_for :users, registerations: 'users/registerations'
   #resources :users
